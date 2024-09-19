@@ -2,6 +2,10 @@
 function splitText(elem, tag) {
 	const el = document.querySelector(elem);
 	const el_text = el.innerText;
+	// 아래와 같이 DOM.style.fontSize = "0px"은
+	// 실제 html태그상에 <h1 style="font-size:0px"></h1>
+	// 와 같이 인라인 스타일 형태로 적용
+	el.style.fontSize = "0px"; //fontSize 지정
 
 	// for of 반복문 안쪽에서 += 복합대입연산자로
 	// 태그 문자열이 들어있는 문자값이 계속 쌓일 변수 초기값 설정
@@ -11,14 +15,18 @@ function splitText(elem, tag) {
 	// resultText 변수에 쌓아나감
 	for (let letter of el_text) {
 		console.log(letter);
-		resultText += `<${tag}>${letter}</${tag}>`;
+		// 동적으로 생성되는 문자열 자체적으로 style=""형식으로 스타일 값 연결가능
+		resultText += `<${tag} style="display:inline-block">${letter}</${tag}>`;
 	}
 	console.log(resultText);
+	//반복문이 끝나고 최종 완성된 문자열을 el요소의 innerHTML 프로퍼티에 대입해서
+	// 기존 el요소 안쪽의 HTML 구조를 변경
 	el.innerHTML = resultText;
 }
 
 splitText("h1", "span");
-// step2 - span 요소 자체를 우리가 원하는 요소명으로 인수 전달처리
+// step2 - 반복적인 스타일 정보를 css가 아닌 js에서 동적 적용 (span 요소 자체를 우리가 원하는 요소명으로 인수 전달처리)
+
 // step3 - 인터벌 시간값을 3번째 인수로 전달하면 delay값이 설정됨
 // step4 - 세번째 인수값이 전달되지 않으면 무조건 delay값을 디폴트로 0처리
 
